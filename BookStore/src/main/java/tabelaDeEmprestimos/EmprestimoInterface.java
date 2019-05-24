@@ -1,14 +1,12 @@
 package tabelaDeEmprestimos;
 
 import javax.swing.JOptionPane;
-
+import informacoesLivros.Informacoes;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -82,8 +80,7 @@ public class EmprestimoInterface extends Application {
 	
 	private void funcoes() {
 		
-		butApagar.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent evento) {
+		butApagar.setOnAction((evento) -> {
 				ListaInterface.emp.removerLivro(new Livro(tabEstante.getSelectionModel().getSelectedItem().getNome(), 
 													tabEstante.getSelectionModel().getSelectedItem().getCod(),
 													tabEstante.getSelectionModel().getSelectedItem().getAno(),
@@ -91,11 +88,11 @@ public class EmprestimoInterface extends Application {
 													tabEstante.getSelectionModel().getSelectedItem().getEditora()));
 
 				tabEstante.getItems().remove(tabEstante.getSelectionModel().getSelectedItem());
-			}
-		});
+			});
 		
 		butVoltar.setOnAction((evento) -> {
 				EmprestimoInterface.stage.close();
+				Informacoes.stage.close();
 				
 		});
 		

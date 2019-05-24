@@ -1,13 +1,8 @@
-package Login;
-
+package menu;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -21,17 +16,18 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import menu.Menu;
+import tabelaDeLivros.ListaInterface;
 
-public class Login extends Application {        
+public class Menu extends Application {
 	
 	private AnchorPane pane;
-	private TextField txtLogin;
-	private TextField txtSenha;
-	private Button botEntrar;
-	private ImageView imagem, logo;
+	private Button botEmprestimo;
+	private Button botSair;
+	private Button botInfo;
+	private ImageView logo;
 	private Text inicio;
 	private static Stage stage;
+	
 	@Override
 	
 	public void start(Stage stage) throws Exception { 
@@ -41,11 +37,11 @@ public class Login extends Application {
 	Scene scene = new Scene(pane);    
 	stage.setScene(scene);   
 	stage.getIcons().add(new Image("https://vignette.wikia.nocookie.net/2007scape/images/7/7a/Mage%27s_book_detail.png/revision/latest?cb=20180310083825"));
-	stage.setTitle("Livraria - Bookstore");
+	stage.setTitle("Bookstore - Menu");
 	stage.setResizable(false);
 	stage.show();     
 	layouts();
-	Login.stage = stage;
+	Menu.stage = stage;
 	
 	}
 	
@@ -67,76 +63,47 @@ public class Login extends Application {
         inicio = new Text();
         inicio.setFont(Font.font("calibri", FontWeight.BLACK, FontPosture.REGULAR, 40));
         inicio.setText("BookStore");
-        txtLogin = new TextField();
-        txtLogin.setPromptText("Digite aqui seu login"); 
-        txtSenha = new PasswordField();
-        txtSenha.setPromptText("Digite aqui sua senha");
-        botEntrar = new Button("Entrar");
-        imagem = new ImageView(new Image("https://cdn140.picsart.com/290100131068211.png?r1024x1024"));
+        botEmprestimo = new Button("Emprestimo");
+        botSair = new Button("Sair");
+        botInfo = new Button("Informacoes");
         logo = new ImageView(new Image("http://www.sclance.com/pngs/open-book-png-icon/open_book_png_icon_959216.png"));
         logo.setFitWidth(100);
 		logo.setFitHeight(100);
-        pane.getChildren().addAll(inicio, txtLogin, txtSenha, botEntrar, imagem, logo);
+        pane.getChildren().addAll(inicio, botEmprestimo, botSair, botInfo, logo);
         
 	}
 	
 	private void layouts() {
 		
 
-		txtLogin.setLayoutX(400);
-		txtLogin.setLayoutY(20);
-		txtSenha.setLayoutX(560);
-		txtSenha.setLayoutY(20);
-		botEntrar.setLayoutX(720);
-		botEntrar.setLayoutY(20);
-		imagem.setLayoutX(320);
-		imagem.setLayoutY(170);
-		logo.setLayoutX(10);
-		inicio.setLayoutX(150);
+		botEmprestimo.setLayoutX(385);
+		botEmprestimo.setLayoutY(200);
+		botInfo.setLayoutX(385);
+		botInfo.setLayoutY(250);
+		botSair.setLayoutX(405);
+		botSair.setLayoutY(300);
+		logo.setLayoutX(377);
+		logo.setLayoutY(50);
+		inicio.setLayoutX(345);
 		inicio.setLayoutY(50);
 		
 		
 	}
 	
 	private void funcoes() {
-		botEntrar.setOnAction((evento) -> {
-				
-				if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
+		botEmprestimo.setOnAction((evento) -> {
 					try {
-						new Menu().start(new Stage());
-						Login.getStage().close();
+						new ListaInterface().start(new Stage());
+						Menu.getStage().close();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}else {
-					
-					Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Erro");
-                    alert.setHeaderText("Login e/ou senha inválidos");
-                    alert.setContentText("Tente novamente.");
-                    alert.showAndWait();
-				}
 			});
 		
-		txtSenha.setOnAction((evento) -> {
-			
-			if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
-				try {
-					new Menu().start(new Stage());
-					Login.getStage().close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}else {
-				
-				Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Erro");
-                alert.setHeaderText("Login e/ou senha inválidos");
-                alert.setContentText("Tente novamente.");
-                alert.showAndWait();
-			}
-		});
-		
+		botSair.setOnAction((evento) -> {
+				Menu.getStage().close();
+			});
+	
 	}	
 		
 	
@@ -146,3 +113,4 @@ public class Login extends Application {
 	
 	
 	}
+

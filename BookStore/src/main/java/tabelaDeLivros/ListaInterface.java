@@ -5,8 +5,6 @@ import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -17,6 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
 import tabelaDeLivros.Livro;
 import tabelaDeEmprestimos.Emprestimo;
@@ -33,7 +36,6 @@ public class ListaInterface extends Application {
 	private TableColumn<Acervo, String> colunaEditora;
 	private static ObservableList<Acervo> listLivros = FXCollections.observableArrayList();
 	public static Emprestimo emp = new Emprestimo();
-	
 	
 	@Override
 	
@@ -62,7 +64,9 @@ public class ListaInterface extends Application {
 		
 		pane = new AnchorPane();
 		pane.setPrefSize(800, 600);
-		
+		BackgroundImage back = new BackgroundImage(new Image("https://images.unsplash.com/photo-1460602594182-8568137446ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80", 
+        		800, 600, false, true),  BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        pane.setBackground(new Background(back));
 		txtPesquisa = new TextField();
 		txtPesquisa.setPromptText("Digite o nome para pesquisa");
 		txtPesquisa.setPrefWidth(200);
@@ -107,15 +111,13 @@ public class ListaInterface extends Application {
 	}
 	
 	private void funcoes() {	
-		txtPesquisa.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent evento) {
+		txtPesquisa.setOnAction((evento) -> {
 				if (!txtPesquisa.getText().equals("")) {
 					tabEstante.setItems(buscaLivro());
 				}else {
 					tabEstante.setItems(listLivros);
 				}
-			}
-		});
+			});
 		
 		tabEstante.setOnMousePressed((evento) -> {
 			
