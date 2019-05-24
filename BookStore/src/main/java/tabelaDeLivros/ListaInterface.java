@@ -1,9 +1,12 @@
 package tabelaDeLivros;
 
+import informacoesLivros.informacoes;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -14,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import tabelaDeLivros.Livro;
 import tabelaDeEmprestimos.Emprestimo;
 
 public class ListaInterface extends Application {
@@ -35,6 +39,7 @@ public class ListaInterface extends Application {
 	public void start(Stage stage) throws Exception {
 		
 		componentes();
+		funcoes();
 		Scene scene = new Scene(pane);    
 		stage.setScene(scene);   
 		stage.setTitle("Estante de Livros");
@@ -85,6 +90,54 @@ public class ListaInterface extends Application {
 		pane.getChildren().addAll(txtPesquisa, title, tabEstante);
 		
 	}
+	
+	private ObservableList<Acervo> buscaLivro(){
+
+		ObservableList<Acervo> encontrado = FXCollections.observableArrayList();
+		
+		for (Acervo a: listLivros) {
+			if (a.getNome().contains(txtPesquisa.getText()) || a.getAutor().contains(txtPesquisa.getText()) || a.getEditora().contains(txtPesquisa.getText())) {
+				encontrado.add(a);
+			}
+		}
+		
+		return encontrado;
+	}
+	
+	private void funcoes() {	
+		txtPesquisa.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent evento) {
+				if (!txtPesquisa.getText().equals("")) {
+					tabEstante.setItems(buscaLivro());
+				}else {
+					tabEstante.setItems(listLivros);
+				}
+			}
+		});
+		
+		tabEstante.setOnMousePressed((evento) -> {
+			
+					if (evento.getClickCount() == 2) {
+						informacoes.index = tabEstante.getSelectionModel().getSelectedIndex();
+						informacoes.book = new Livro (tabEstante.getSelectionModel().getSelectedItem().getNome(), 
+													tabEstante.getSelectionModel().getSelectedItem().getCod(),
+													tabEstante.getSelectionModel().getSelectedItem().getAno(),
+													tabEstante.getSelectionModel().getSelectedItem().getAutor(),
+													tabEstante.getSelectionModel().getSelectedItem().getEditora()
+													);
+		
+						try {		
+						new informacoes().start(new Stage());
+						
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+		
+		});
+	}
+	
+
 	
 	private void cadLivro() {
 		Lista l = new Lista();
