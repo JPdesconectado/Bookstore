@@ -104,6 +104,14 @@ public class Menu extends Application {
 				Menu.getStage().close();
 			});
 	
+		botInfo.setOnAction((evento) -> {
+			try {
+				new InfoEmp().start(new Stage());
+				Menu.getStage().close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		});
 	}	
 		
 	
