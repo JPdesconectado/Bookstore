@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +44,7 @@ public class ListaInterface extends Application {
 		Scene scene = new Scene(pane);    
 		stage.setScene(scene);   
 		stage.setTitle("Estante de Livros");
+		stage.getIcons().add(new Image("https://vignette.wikia.nocookie.net/2007scape/images/7/7a/Mage%27s_book_detail.png/revision/latest?cb=20180310083825"));
 		stage.show();     
 		layout();
 		

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tabelaDeLivros.ListaInterface;
@@ -42,6 +43,7 @@ public class EmprestimoInterface extends Application {
 		Scene scene = new Scene(pane);
 		stage.setScene(scene);
 		stage.setTitle("Lista de Emprestimo");
+		stage.getIcons().add(new Image("https://vignette.wikia.nocookie.net/2007scape/images/7/7a/Mage%27s_book_detail.png/revision/latest?cb=20180310083825"));
 		stage.show();
 		layout();
 		EmprestimoInterface.stage = stage;
