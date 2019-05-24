@@ -2,8 +2,6 @@ package Login;
 
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -100,8 +98,7 @@ public class Login extends Application {
 	}
 	
 	private void funcoes() {
-		botEntrar.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent evento) {
+		botEntrar.setOnAction((evento) -> {
 				
 				if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
 					try {
@@ -118,8 +115,7 @@ public class Login extends Application {
 
                     alert.showAndWait();
 				}
-			}
-		});
+			});
 		
 	}	
 		
