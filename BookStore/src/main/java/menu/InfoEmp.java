@@ -1,12 +1,15 @@
 package menu;
 
+import javafx.animation.Interpolator;
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -18,6 +21,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import net.kurobako.gesturefx.GesturePane;
 
 public class InfoEmp extends Application {
 
@@ -26,7 +31,7 @@ public class InfoEmp extends Application {
 	public static Stage stage;
 	private Text inicio;
 	private ImageView logo, imagem1, imagem2;
-	
+	private GesturePane pes;
 	@Override
 	
 	public void start(Stage stage) throws Exception {
@@ -67,7 +72,8 @@ public class InfoEmp extends Application {
         imagem2 = new ImageView(new Image("https://orig06.deviantart.net/6db3/f/2012/339/0/e/kakashi_render_by_lbackfromthedeadl-d5n70qv.png"));
         imagem2.setFitHeight(328);
         imagem2.setFitWidth(300);
-		pane.getChildren().addAll(inicio, logo, imagem1, imagem2, butVoltar, butReg, butPrazo, butRen, butPen, butRes, butLem);
+        pes = new GesturePane(imagem2);
+		pane.getChildren().addAll(inicio, logo, imagem1, pes, butVoltar, butReg, butPrazo, butRen, butPen, butRes, butLem);
 	}
 	
 	private void funcoes() {
@@ -134,6 +140,17 @@ public class InfoEmp extends Application {
 			dialogoLem.setContentText("Só tem livro bom aqui!");
 			dialogoLem.showAndWait(); 
 		});
+		
+		pes.setOnMouseClicked(e -> {
+			if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+				Point2D pivotOnTarget = pes.targetPointAt(new Point2D(e.getX(), e.getY()))
+						                        .orElse(pes.targetPointAtViewportCentre());
+				// increment of scale makes more sense exponentially instead of linearly 
+				pes.animate(Duration.millis(200))
+						.interpolateWith(Interpolator.EASE_BOTH)
+						.zoomBy(pes.getCurrentScale(), pivotOnTarget);
+			}
+		});
 	}
 	
 	private void layout() {
@@ -157,8 +174,8 @@ public class InfoEmp extends Application {
 		inicio.setLayoutY(50);
 		imagem1.setLayoutX(-120);
 		imagem1.setLayoutY(300);
-		imagem2.setLayoutX(520);
-		imagem2.setLayoutY(300);
+		pes.setLayoutX(540);
+		pes.setLayoutY(300);
 	}
 	
 	public static void main(String[] args) {

@@ -17,6 +17,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tabelaDeLivros.ListaInterface;
+import net.kurobako.gesturefx.GesturePane;
 
 public class Menu extends Application {
 	
@@ -27,6 +28,7 @@ public class Menu extends Application {
 	private ImageView logo, imagem1, imagem2;
 	private Text inicio;
 	private static Stage stage;
+	private GesturePane pes;
 	
 	@Override
 	
@@ -73,7 +75,8 @@ public class Menu extends Application {
         imagem2 = new ImageView(new Image("https://orig06.deviantart.net/6db3/f/2012/339/0/e/kakashi_render_by_lbackfromthedeadl-d5n70qv.png"));
         imagem2.setFitHeight(328);
         imagem2.setFitWidth(300);
-        pane.getChildren().addAll(inicio, botEmprestimo, botSair, botInfo, logo, imagem1, imagem2);
+        pes = new GesturePane(imagem2);
+        pane.getChildren().addAll(inicio, botEmprestimo, botSair, botInfo, imagem1, pes);
         
 	}
 	
@@ -92,9 +95,8 @@ public class Menu extends Application {
 		inicio.setLayoutY(50);
 		imagem1.setLayoutX(-120);
 		imagem1.setLayoutY(300);
-		imagem2.setLayoutX(520);
-		imagem2.setLayoutY(300);
-		
+		pes.setLayoutX(540);
+		pes.setLayoutY(300);
 		
 	}
 	

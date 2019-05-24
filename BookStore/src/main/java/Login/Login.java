@@ -98,10 +98,13 @@ public class Login extends Application {
 		
 	}
 	
+	public interface verifica {
+		boolean check(String login, String senha);
+	}
 	private void funcoes() {
 		botEntrar.setOnAction((evento) -> {
-				
-				if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
+				slc t = new slc();
+				if (t.check(txtLogin.getText(), txtSenha.getText()) == true) {
 					try {
 						new Menu().start(new Stage());
 						Login.getStage().close();
@@ -139,7 +142,15 @@ public class Login extends Application {
 		
 	}	
 		
-	
+	public class slc implements verifica {
+		public boolean check(String Login, String senha) {
+			if (Login.equals("admin") && senha.equals("admin")) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+	}
 	public static Stage stage() {
 		return stage;
 	}

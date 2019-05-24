@@ -22,7 +22,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
-import menu.InfoEmp;
 import menu.Menu;
 import tabelaDeLivros.Livro;
 import tabelaDeEmprestimos.Emprestimo;

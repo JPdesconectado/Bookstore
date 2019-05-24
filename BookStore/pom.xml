@@ -9,12 +9,25 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <version>0.0.1-SNAPSHOT</version>
   <name>BookS</name>
   
-   	<dependencies>
+  <repositories>
+    <repository>
+        <id>jcenter</id>
+        <url>https://jcenter.bintray.com/</url>
+    </repository>
+</repositories>
+
+  	<dependencies>
 		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-controls</artifactId>
 			<version>13-ea+7</version>
 		</dependency>
+
+	<dependency>
+    <groupId>net.kurobako</groupId>
+    <artifactId>gesturefx</artifactId>
+    <version>0.3.0</version>
+</dependency>
 
 	</dependencies>
 	<build>
@@ -28,6 +41,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</configuration>
 			</plugin>
 		</plugins>
-</build>
-  
+	</build>
+
 </project>
