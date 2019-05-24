@@ -1,71 +1,61 @@
-package tabelaDeLivros;
+package tabelaDeEmprestimos;
+
+import javax.swing.JOptionPane;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import tabelaDeEmprestimos.Emprestimo;
+import tabelaDeLivros.ListaInterface;
+import tabelaDeLivros.Livro;
 
-public class ListaInterface extends Application {
+
+public class EmprestimoInterface extends Application {
 
 	private AnchorPane pane;
-	private TextField txtPesquisa;
-	private TableView<Acervo> tabEstante;
-	private TableColumn<Acervo, String> colunaNome;
-	private TableColumn<Acervo, String>	colunaCod;
-	private TableColumn<Acervo, String> colunaAno;
-	private TableColumn<Acervo, String> colunaAutor;
-	private TableColumn<Acervo, String> colunaEditora;
-	private static ObservableList<Acervo> listLivros = FXCollections.observableArrayList();
-	public static Emprestimo emp = new Emprestimo();
+	private TableView <Acervo> tabEstante;
+	private TableColumn <Acervo, String> colunaNome;
+	private TableColumn <Acervo, String> colunaCod;
+	private TableColumn <Acervo, String> colunaAno;
+	private TableColumn <Acervo, String> colunaAutor;
+	private TableColumn <Acervo, String> colunaEditora;
+	private Button butApagar, butVoltar, butConfirmar;
+	private static Stage stage;
+	private static ObservableList<Acervo> listLivros;
 	
 	
 	@Override
 	
 	public void start(Stage stage) throws Exception {
-		
 		componentes();
-		Scene scene = new Scene(pane);    
-		stage.setScene(scene);   
-		stage.setTitle("Estante de Livros");
-		stage.show();     
+		funcoes();
+		Scene scene = new Scene(pane);
+		stage.setScene(scene);
+		stage.setTitle("Lista de Emprestimo");
+		stage.show();
 		layout();
-		
+		EmprestimoInterface.stage = stage;
 	}
 	
-	public static void main(String[] args){            
-		launch(args);        
-		
-	}
-	
-
-
 	@SuppressWarnings("unchecked")
 	private void componentes() {
-		
+		listLivros = FXCollections.observableArrayList();
 		pane = new AnchorPane();
 		pane.setPrefSize(800, 600);
-		
-		txtPesquisa = new TextField();
-		txtPesquisa.setPromptText("Digite o nome para pesquisa");
-		txtPesquisa.setPrefWidth(200);
-		txtPesquisa.setFocusTraversable(true);
 		tabEstante = new TableView<Acervo>();
 		cadLivro();
 		tabEstante.setItems(listLivros);
 		tabEstante.setPrefSize(780, 550);
-		final Label title = new Label("Catálogo de Livros");
-		title.setFont(Font.font("Amble CN", FontWeight.BOLD, 24));
 		colunaNome = new TableColumn<Acervo, String>();
 		colunaNome.setCellValueFactory(new PropertyValueFactory<Acervo, String>("nome"));	
 		colunaNome.setText("Nome");
@@ -82,34 +72,64 @@ public class ListaInterface extends Application {
 		colunaEditora.setCellValueFactory(new PropertyValueFactory<Acervo, String>("editora"));
 		colunaEditora.setText("Editora");
 		tabEstante.getColumns().addAll(colunaNome, colunaCod, colunaAno, colunaAutor, colunaEditora);
-		pane.getChildren().addAll(txtPesquisa, title, tabEstante);
-		
+		butApagar = new Button("Deletar Livro");
+		butVoltar = new Button("Voltar a Estante");
+		butConfirmar = new Button ("Confirmar Emprestimo");
+		pane.getChildren().addAll(tabEstante, butApagar, butVoltar, butConfirmar);
 	}
 	
-	private void cadLivro() {
-		Lista l = new Lista();
-		l.addLivros(
-				new Livro("Harry Potter e a Pedra Filosofal", "#001", "1997", "JK Rolling", "Rocco"),
-				new Livro("O Mundo de Gelo e Fogo", "#002", "2014", "George RR Martin", "LeYa"), 
-				new Livro("O Cavaleiro dos Sete Reinos", "#003", "2014", "George RR Martin", "LeYa"), 
-				new Livro("As Crônicas de Nárnia", "#004", "2000", "C. S. Lewis", "WMF Martins Fontes"), 
-				new Livro("Fogo e Sangue", "#005", "2018", "George RR Martin", "LeYa"), 
-				new Livro("O Dragão de Gelo", "#006", "1980", "George RR Martin", "LeYa")
-		);
+	private void funcoes() {
 		
-		for (Livro liv: l.getLivros())
-			listLivros.add(new Acervo(liv.getNome(), liv.getCod(), liv.getAno(), liv.getAutor(), liv.getEditora()));
-	}
-	
-	
-	private void layout() {
+		butApagar.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent evento) {
+				ListaInterface.emp.removerLivro(new Livro(tabEstante.getSelectionModel().getSelectedItem().getNome(), 
+													tabEstante.getSelectionModel().getSelectedItem().getCod(),
+													tabEstante.getSelectionModel().getSelectedItem().getAno(),
+													tabEstante.getSelectionModel().getSelectedItem().getAutor(),
+													tabEstante.getSelectionModel().getSelectedItem().getEditora()));
 
+				tabEstante.getItems().remove(tabEstante.getSelectionModel().getSelectedItem());
+			}
+		});
 		
-		txtPesquisa.setLayoutX(590);
-		txtPesquisa.setLayoutY(10);
+		butVoltar.setOnAction((evento) -> {
+				EmprestimoInterface.stage.close();
+				
+		});
+		
+		butConfirmar.setOnAction((evento) -> {
+			
+				Thread thread = new Thread() {
+					public void run() {
+						try {
+							sleep(5000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						JOptionPane.showMessageDialog(null, "Emprestimo Realizado!");
+						Platform.runLater(new Runnable(){
+							public void run() {
+								EmprestimoInterface.stage.close();
+							}
+						});
+					};
+				};
+				thread.start();
+			
+		});
+	}
+	
+
+	private void layout() {
 		tabEstante.setLayoutX(10);
-		tabEstante.setLayoutY(40);
-}
+		tabEstante.setLayoutY(5);
+		butApagar.setLayoutX(10);
+		butApagar.setLayoutY(570);
+		butVoltar.setLayoutX((pane.getWidth() - butVoltar.getWidth()) / 2);
+		butVoltar.setLayoutY(570);
+		butConfirmar.setLayoutX(650);
+		butConfirmar.setLayoutY(570);
+	}
 	
 	public class Acervo {
 		
@@ -167,10 +187,17 @@ public class ListaInterface extends Application {
 		public void setEditora(String editora) {
 			this.editora.set(editora);
 		}
+	}
+	
+	private void cadLivro() {
+		for (Livro l : ListaInterface.emp.getLivros()) 
+			listLivros.add(new Acervo(l.getNome(), l.getCod(), l.getAno(), l.getAutor(), l.getEditora()));
 		
 	}
 	
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	
 }
-
-
-
