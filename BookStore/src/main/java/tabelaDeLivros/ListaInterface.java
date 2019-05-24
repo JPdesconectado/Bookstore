@@ -1,6 +1,6 @@
 package tabelaDeLivros;
 
-import informacoesLivros.informacoes;
+import informacoesLivros.Informacoes;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -118,8 +118,8 @@ public class ListaInterface extends Application {
 		tabEstante.setOnMousePressed((evento) -> {
 			
 					if (evento.getClickCount() == 2) {
-						informacoes.index = tabEstante.getSelectionModel().getSelectedIndex();
-						informacoes.book = new Livro (tabEstante.getSelectionModel().getSelectedItem().getNome(), 
+						Informacoes.index = tabEstante.getSelectionModel().getSelectedIndex();
+						Informacoes.book = new Livro (tabEstante.getSelectionModel().getSelectedItem().getNome(), 
 													tabEstante.getSelectionModel().getSelectedItem().getCod(),
 													tabEstante.getSelectionModel().getSelectedItem().getAno(),
 													tabEstante.getSelectionModel().getSelectedItem().getAutor(),
@@ -127,7 +127,7 @@ public class ListaInterface extends Application {
 													);
 		
 						try {		
-						new informacoes().start(new Stage());
+						new Informacoes().start(new Stage());
 						
 						} catch (Exception e) {
 							e.printStackTrace();
