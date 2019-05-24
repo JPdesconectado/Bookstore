@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +22,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Stage;
+import menu.InfoEmp;
+import menu.Menu;
 import tabelaDeLivros.Livro;
 import tabelaDeEmprestimos.Emprestimo;
 
@@ -35,6 +38,8 @@ public class ListaInterface extends Application {
 	private TableColumn<Acervo, String> colunaAutor;
 	private TableColumn<Acervo, String> colunaEditora;
 	private static ObservableList<Acervo> listLivros = FXCollections.observableArrayList();
+	private Button butVoltar;
+	public static Stage stage;
 	public static Emprestimo emp = new Emprestimo();
 	
 	@Override
@@ -49,6 +54,7 @@ public class ListaInterface extends Application {
 		stage.getIcons().add(new Image("https://vignette.wikia.nocookie.net/2007scape/images/7/7a/Mage%27s_book_detail.png/revision/latest?cb=20180310083825"));
 		stage.show();     
 		layout();
+		ListaInterface.stage = stage;
 		
 	}
 	
@@ -70,6 +76,7 @@ public class ListaInterface extends Application {
 		txtPesquisa = new TextField();
 		txtPesquisa.setPromptText("Digite o nome para pesquisa");
 		txtPesquisa.setPrefWidth(200);
+		butVoltar = new Button("Voltar");
 		txtPesquisa.setFocusTraversable(true);
 		tabEstante = new TableView<Acervo>();
 		cadLivro();
@@ -93,7 +100,7 @@ public class ListaInterface extends Application {
 		colunaEditora.setCellValueFactory(new PropertyValueFactory<Acervo, String>("editora"));
 		colunaEditora.setText("Editora");
 		tabEstante.getColumns().addAll(colunaNome, colunaCod, colunaAno, colunaAutor, colunaEditora);
-		pane.getChildren().addAll(txtPesquisa, title, tabEstante);
+		pane.getChildren().addAll(txtPesquisa, butVoltar, title, tabEstante);
 		
 	}
 	
@@ -118,6 +125,15 @@ public class ListaInterface extends Application {
 					tabEstante.setItems(listLivros);
 				}
 			});
+		
+		butVoltar.setOnAction((evento) -> {
+			try {
+				new Menu().start(new Stage());
+				ListaInterface.stage.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		
 		tabEstante.setOnMousePressed((evento) -> {
 			
@@ -161,8 +177,9 @@ public class ListaInterface extends Application {
 	
 	private void layout() {
 
-		
-		txtPesquisa.setLayoutX(590);
+		butVoltar.setLayoutX(730);
+		butVoltar.setLayoutY(10);
+		txtPesquisa.setLayoutX(500);
 		txtPesquisa.setLayoutY(10);
 		tabEstante.setLayoutX(10);
 		tabEstante.setLayoutY(40);

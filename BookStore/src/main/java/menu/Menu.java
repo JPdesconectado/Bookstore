@@ -24,7 +24,7 @@ public class Menu extends Application {
 	private Button botEmprestimo;
 	private Button botSair;
 	private Button botInfo;
-	private ImageView logo;
+	private ImageView logo, imagem1, imagem2;
 	private Text inicio;
 	private static Stage stage;
 	
@@ -69,7 +69,11 @@ public class Menu extends Application {
         logo = new ImageView(new Image("http://www.sclance.com/pngs/open-book-png-icon/open_book_png_icon_959216.png"));
         logo.setFitWidth(100);
 		logo.setFitHeight(100);
-        pane.getChildren().addAll(inicio, botEmprestimo, botSair, botInfo, logo);
+		imagem1 = new ImageView(new Image("http://i.imgur.com/enOkJbE.png"));
+        imagem2 = new ImageView(new Image("https://orig06.deviantart.net/6db3/f/2012/339/0/e/kakashi_render_by_lbackfromthedeadl-d5n70qv.png"));
+        imagem2.setFitHeight(328);
+        imagem2.setFitWidth(300);
+        pane.getChildren().addAll(inicio, botEmprestimo, botSair, botInfo, logo, imagem1, imagem2);
         
 	}
 	
@@ -86,6 +90,10 @@ public class Menu extends Application {
 		logo.setLayoutY(50);
 		inicio.setLayoutX(345);
 		inicio.setLayoutY(50);
+		imagem1.setLayoutX(-120);
+		imagem1.setLayoutY(300);
+		imagem2.setLayoutX(520);
+		imagem2.setLayoutY(300);
 		
 		
 	}
