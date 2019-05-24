@@ -1,16 +1,27 @@
 package Login;
 
-import javax.swing.JOptionPane;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Login extends Application {        
@@ -19,8 +30,8 @@ public class Login extends Application {
 	private TextField txtLogin;
 	private TextField txtSenha;
 	private Button botEntrar;
-	private Button botSair;
-	private ImageView imagem;
+	private ImageView imagem, logo;
+	private Text inicio;
 	private static Stage stage;
 	@Override
 	
@@ -30,62 +41,82 @@ public class Login extends Application {
 	funcoes();
 	Scene scene = new Scene(pane);    
 	stage.setScene(scene);   
+	stage.getIcons().add(new Image("https://vignette.wikia.nocookie.net/2007scape/images/7/7a/Mage%27s_book_detail.png/revision/latest?cb=20180310083825"));
 	stage.setTitle("Livraria - Bookstore");
+	stage.setResizable(false);
 	stage.show();     
 	layouts();
 	Login.stage = stage;
 	
 	}
 	
+	public static Stage getStage() {
+		return stage;
+	}
 	public static void main(String[] args){            
 		launch(args);        
 		
 		}
 	
 	private void componentes() {
-		
-		pane = new AnchorPane();
-		pane.setPrefSize(400, 300);  
-		pane.setStyle("-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, blue 0%, orange 100%);");
-		txtLogin = new TextField();          
-		txtLogin.setPromptText("Digite aqui seu login"); 
-		txtSenha = new PasswordField();           
-		txtSenha.setPromptText("Digite aqui sua senha");
-		botEntrar = new Button("Entrar");  
-		botSair = new Button("Sair"); 
-		imagem = new ImageView(new Image("https://image.flaticon.com/icons/png/128/167/167755.png"));
-		pane.getChildren().addAll(txtLogin, txtSenha, botEntrar, botSair, imagem);      
+
+        pane = new AnchorPane();
+        pane.setPrefSize(800, 600);
+        BackgroundImage back = new BackgroundImage(new Image("https://images.unsplash.com/photo-1460602594182-8568137446ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80", 
+        		800, 600, false, true),  BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        pane.setBackground(new Background(back));
+        inicio = new Text();
+        inicio.setFont(Font.font("calibri", FontWeight.BLACK, FontPosture.REGULAR, 40));
+        inicio.setText("BookStore");
+        txtLogin = new TextField();
+        txtLogin.setPromptText("Digite aqui seu login"); 
+        txtSenha = new PasswordField();
+        txtSenha.setPromptText("Digite aqui sua senha");
+        botEntrar = new Button("Entrar");
+        imagem = new ImageView(new Image("https://cdn140.picsart.com/290100131068211.png?r1024x1024"));
+        logo = new ImageView(new Image("http://www.sclance.com/pngs/open-book-png-icon/open_book_png_icon_959216.png"));
+        logo.setFitWidth(100);
+		logo.setFitHeight(100);
+        pane.getChildren().addAll(inicio, txtLogin, txtSenha, botEntrar, imagem, logo);
+        
 	}
 	
 	private void layouts() {
 		
-		txtLogin.setLayoutX(10);
-		txtLogin.setLayoutY(110);
-		txtSenha.setLayoutX(10);
-		txtSenha.setLayoutY(140);
-		botEntrar.setLayoutX(10);
-		botEntrar.setLayoutY(170);
-		botSair.setLayoutX(70);
-		botSair.setLayoutY(170); 
-		imagem.setLayoutX(20);
-		imagem.setLayoutY(-10);
+
+		txtLogin.setLayoutX(400);
+		txtLogin.setLayoutY(20);
+		txtSenha.setLayoutX(560);
+		txtSenha.setLayoutY(20);
+		botEntrar.setLayoutX(720);
+		botEntrar.setLayoutY(20);
+		imagem.setLayoutX(320);
+		imagem.setLayoutY(170);
+		logo.setLayoutX(10);
+		inicio.setLayoutX(150);
+		inicio.setLayoutY(50);
+		
 		
 	}
 	
 	private void funcoes() {
-		botSair.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				System.exit(0);
-			}
-		});
-	
 		botEntrar.setOnAction(new EventHandler<ActionEvent>(){
-			public void handle(ActionEvent event) {
+			public void handle(ActionEvent evento) {
 				
 				if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
-					// TODO proxima janela
+					try {
+						// TODO
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}else {
-					JOptionPane.showMessageDialog(null, "Login e/ou senha inválidos", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+					Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Erro");
+                    alert.setHeaderText("Login e/ou senha inválidos");
+                    alert.setContentText("Tente novamente.");
+
+                    alert.showAndWait();
 				}
 			}
 		});
