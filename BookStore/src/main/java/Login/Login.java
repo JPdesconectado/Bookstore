@@ -21,6 +21,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import tabelaDeLivros.ListaInterface;
 
 public class Login extends Application {        
 	
@@ -102,7 +103,8 @@ public class Login extends Application {
 				
 				if (txtLogin.getText().equals("admin") && txtSenha.getText().equals("admin")) {
 					try {
-						// TODO
+						new ListaInterface().start(new Stage());
+						Login.getStage().close();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
